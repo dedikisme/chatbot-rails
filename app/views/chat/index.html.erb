@@ -1,0 +1,18 @@
+<% javascript 'chat_index.js' %>
+
+
+<h1>Chat#index</h1>
+<%= @data %>
+
+
+<div class="chat">
+
+	<div class="tampil">
+			
+	</div>
+<%= form_tag("create",:method => "post", :id => "formpesan" )  %>
+	<input type='text' name="pesan" class="pesan" placeholder="Silahkan tulis pertanyaan anda" id="pesan">
+	<input type='submit' class="btn btn-primary" value='Kirim'>
+</form>
+<%= request.remote_ip %>
+</div>

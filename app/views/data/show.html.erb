@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Topik:</strong>
+  <%= @datum.topik %>
+</p>
+
+<p>
+  <strong>Keywords:</strong>
+  <%= @datum.keywords %>
+</p>
+
+<p>
+  <strong>Adalah:</strong>
+  <%= @datum.adalah %>
+</p>
+
+<p>
+  <strong>Oleh:</strong>
+  <%= @datum.oleh %>
+</p>
+
+<p>
+  <strong>Dimana:</strong>
+  <%= @datum.dimana %>
+</p>
+
+<p>
+  <strong>Bagaimana:</strong>
+  <%= @datum.bagaimana %>
+</p>
+
+<%= link_to 'Edit', edit_datum_path(@datum) %> |
+<%= link_to 'Back', data_path %>

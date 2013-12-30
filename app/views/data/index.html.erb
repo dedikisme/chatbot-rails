@@ -1,0 +1,37 @@
+<h1>Listing data</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Topik</th>
+      <th>Keywords</th>
+      <th>Adalah</th>
+      <th>Oleh</th>
+      <th>Dimana</th>
+      <th>Bagaimana</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @data.each do |datum| %>
+      <tr>
+        <td><%= datum.topik %></td>
+        <td><%= datum.keywords %></td>
+        <td><%= datum.adalah %></td>
+        <td><%= datum.oleh %></td>
+        <td><%= datum.dimana %></td>
+        <td><%= datum.bagaimana %></td>
+        <td><%= link_to 'Show', datum %></td>
+        <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
+        <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Datum', new_datum_path %>

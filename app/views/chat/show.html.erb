@@ -1,0 +1,19 @@
+<% javascript 'chat_show.js' %>
+<table class="table table-striped">
+    <tbody>
+    	<%= @cookies %>
+<% for i in 1..@chat.pesan.count %>
+ <tr>
+    <td>
+<% if (i%2==0)  %>
+	<%= 'CS : ' %>
+<% else %>
+	<%= 'You : ' %>
+<% end %>
+<%= @chat.pesan["#{i}"]  %>
+	</td>
+</tr>			
+<% end %>
+ </tbody>
+</table>
+<div id="down"></div>
