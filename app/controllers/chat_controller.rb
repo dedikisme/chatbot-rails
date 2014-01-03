@@ -12,6 +12,7 @@ class ChatController < ApplicationController
   kalimat=chat_params['pesan']
   if kalimat!=''
     Chat.where(_id: cookies[:log]).set(:pesan => insertpesan(kalimat))
+    kalimat=kalimat.downcase
     Chat.where(_id: cookies[:log]).set(:pesan => insertpesan(jawab(cekkatatanya(kalimat.delete "?"),cektopik(kalimat.delete "?"))))
 #    Chat.where(_id: cookies[:log]).set(:pesan => insertpesan(cekkatatanya(kalimat.delete "?")))
 end
@@ -21,6 +22,7 @@ def show
 
   @chat=Chat.where(_id: cookies[:log]).last
   @cookies=cookies[:log]
+  @topik=cookies[:topik]
   cookies[:log] = { :value => cookies[:log], :expires => Time.now + 3600}
 end
 
@@ -37,6 +39,8 @@ def jawab(tanya,topik)
     case tanya["tanya"] 
     when 'apa'
       hasil= cekdata(topik.adalah)
+    when 'lokasi'
+      hasil= cekdata(topik.lokasi)
     when 'almamater'
       hasil= cekdata(topik.almamater,"#{topik.topik} lulusan dari")
     when 'kerja'
@@ -68,10 +72,18 @@ def jawab(tanya,topik)
         data[i]=c[i].topik
       end
       hasil="aplikasi yang support dengan  #{tanya['param'][0]} antara lain " + data.join(', ')
+ when 'macamsocmed'
+      c = Datum.where(type: "socmed")
+      data=Array.new
+      for i in 0..c.count-1
+        data[i]=c[i].topik
+      end
+      hasil="Macam socmed antara lain " + data.join(', ')
     else
 
       hasil=(tanya["tanya"]==nil)?  "maaf, silahkan menggunakan kata tanya"  : "maaf, data tidak ditemukan"    
     end
+
   else
     hasil="maaf, data tidak ditemukan"
   end
@@ -102,27 +114,36 @@ def chat_params
 end
 
 def cektopik(data)
+  data=data.downcase
   ardata=data.split(' ')
   d= Datum.where(:keywords.in => ardata).first
-
-  return (d==nil)? nil : d;
+  hasil=nil
+  if d==nil
+    hasil= Datum.where(_id: cookies[:topik] ).first
+  else
+    hasil=d
+    cookies[:topik] = { :value => d._id, :expires => Time.now + 3600}
+  end
+  return hasil
 end
 
 def cekkatatanya(data)
 
-  ardata=data.split(' ')
+  ardata=stemming(data)
   hasil={}
   tanya={}
-  tanya["kerja"]=["kerja","pekerjaan"]
-  tanya["almamater"]=["sekolah","kuliah","akademik","universitas","almamater","kampus","belajar"]
-  tanya["kapan"] = ["kapan","kpn"]
-  tanya["bagaimana"] = ["gimana","bagaimana","gmn"]
-  tanya["siapa"]=["sapa","siapa","siapakah","pendiri","pembuat","pencipta"]
-  tanya["alamat"]=["alamat","almt","situs","url","domain"]
-  tanya["macam"]=["saja","macam","jenis"]
-  tanya["fitur"]=["fitur","fasilitas"]
-  tanya["platform"]=["support","platform","device"]
-  tanya["apa"] = ["apa","apakah"]
+  tanya["kerja"]= %w(kerja pekerjaan)
+  tanya["lokasi"]= %w(lokasi tempat)
+  tanya["almamater"]= %w(sekolah kuliah akademik universitas almamater kampus belajar)
+  tanya["kapan"] = %w(kapan kpn)
+  tanya["bagaimana"] = %w(gimana bagaimana gmn)
+  tanya["siapa"]= %w(sapa siapa diri buat cipta)
+  tanya["alamat"]= %w(alamat almt situs url domain)
+    tanya["macam"]=%w(saja macam jenis)
+
+  tanya["fitur"]=%w(fitur fasilitas)
+  tanya["platform"]=%w(support platform device)
+  tanya["apa"] = %w(apa adalah)
   tanya.each do | katanya |
 
     katatanya= katanya[0]
@@ -139,8 +160,9 @@ def cekkatatanya(data)
   katatanya=''
   datata=Array.new
   datamacam={}
-  datamacam['macamfitur']=["chat","video","foto","gambar","musik","mp3"]
-  datamacam['macamplatform']=["android","web","windows","ios","iphone","symbian","blackberry"]
+  datamacam['macamfitur']= %w(chat video foto gambar musik mp3)
+  datamacam['macamplatform']= %w(android web windows ios iphone symbian blackberry)
+  datamacam['macamsocmed']= %w(jejaring sosial socmed social media)
   if hasil["tanya"]=="macam"
     datamacam.each do | katanya |
 
@@ -163,8 +185,8 @@ def cekkatatanya(data)
 
   if hasil["tanya"]=="macam"
     tanya={}
-    tanya["fitur"]=["fitur","fasilitas"]
-    tanya["platform"]=["support","platform","device"]
+    tanya["fitur"]= %w(fitur fasilitas)
+    tanya["platform"]= %w(support platform device)
 
 
     tanya.each do | katanya |
@@ -183,5 +205,17 @@ def cekkatatanya(data)
 
   end
   return  hasil;
+end
+def stemming(kalimat)
+  data=Array.new
+   ardata=kalimat.split(" ")
+    for i in 0..ardata.count-1
+      puts data[i]=ardata[i].stem
+    end
+    return data
+ 
+end
+def hapusawalan
+  
 end
 end
