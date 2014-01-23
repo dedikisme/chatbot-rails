@@ -13,5 +13,7 @@ class Datum
   field :type, type: String
   field :pekerjaan, type: String
   field :almamater, type: String
+  field :lokasi, type: String
+  field :perusahaan, type: String
 end
 

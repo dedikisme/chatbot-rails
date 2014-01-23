@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @stemming.type %>
+</p>
+
+<p>
+  <strong>Keywords:</strong>
+  <%= @stemming.keywords %>
+</p>
+
+<p>
+  <strong>Ganti:</strong>
+  <%= @stemming.ganti %>
+</p>
+
+<p>
+  <strong>Kodisi:</strong>
+  <%= @stemming.kodisi %>
+</p>
+
+<%= link_to 'Edit', edit_stemming_path(@stemming) %> |
+<%= link_to 'Back', stemmings_path %>

@@ -24,6 +24,7 @@ def show
   @cookies=cookies[:log]
   @topik=cookies[:topik]
   cookies[:log] = { :value => cookies[:log], :expires => Time.now + 3600}
+  @scroll = params[:scroll];
 end
 
 def index
@@ -45,6 +46,8 @@ def jawab(tanya,topik)
       hasil= cekdata(topik.almamater,"#{topik.topik} lulusan dari")
     when 'kerja'
       hasil=cekdata(topik.pekerjaan,"Pekerjaan #{topik.topik} adalah ")
+   when 'perusahaan'
+      hasil=cekdata(topik.perusahaan,"Perusahaan dari #{topik.topik} adalah ")
 
     when 'siapa'
       hasil=cekdata(topik.oleh.to_s,"pendiri #{topik.topik} adalah")
@@ -134,6 +137,7 @@ def cekkatatanya(data)
   tanya={}
   tanya["kerja"]= %w(kerja pekerjaan)
   tanya["lokasi"]= %w(lokasi tempat)
+  tanya["perusahaan"]= %w(usaha instansi milik)
   tanya["almamater"]= %w(sekolah kuliah akademik universitas almamater kampus belajar)
   tanya["kapan"] = %w(kapan kpn)
   tanya["bagaimana"] = %w(gimana bagaimana gmn)
@@ -207,13 +211,25 @@ def cekkatatanya(data)
   return  hasil;
 end
 def stemming(kalimat)
-  data=Array.new
-   ardata=kalimat.split(" ")
-    for i in 0..ardata.count-1
-      puts data[i]=ardata[i].stem
+   data=Array.new
+  katakata=Kata.first
+  ardata=kalimat.split(" ")
+  for i in 0..ardata.count-1
+    datatemp=ardata[i].stem
+         data[i]=datatemp
+    for y in 0..katakata.data.count-1
+      if katakata.data[y] == datatemp
+                 data[i]=datatemp
+
+            break
+end
+     if Levenshtein.distance(katakata.data[y], datatemp) ==1
+                    data[i]=  katakata.data[y]
     end
-    return data
- 
+  end
+end
+puts data
+  return data
 end
 def hapusawalan
   

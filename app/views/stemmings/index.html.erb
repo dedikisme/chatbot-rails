@@ -1,0 +1,33 @@
+<h1>Listing stemmings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Keywords</th>
+      <th>Ganti</th>
+      <th>Kodisi</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stemmings.each do |stemming| %>
+      <tr>
+        <td><%= stemming.type %></td>
+        <td><%= stemming.keywords %></td>
+        <td><%= stemming.ganti %></td>
+        <td><%= stemming.kodisi %></td>
+        <td><%= link_to 'Show', stemming %></td>
+        <td><%= link_to 'Edit', edit_stemming_path(stemming) %></td>
+        <td><%= link_to 'Destroy', stemming, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Stemming', new_stemming_path %>

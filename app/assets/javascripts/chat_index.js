@@ -1,8 +1,12 @@
+
+
+
 var chat={}
+
 
 chat.fetchPesan=function(){
 	$.ajax({
-		url:'show#down',
+		url:'/chat/show?scroll=down',
 		type:'GET',
 		data:{method: 'fetch'},
 		success: function(data){
@@ -10,7 +14,17 @@ chat.fetchPesan=function(){
 		}
 	});
 }
-chat.fetchPesan();
+chat.fetchPesan1=function(){
+	$.ajax({
+		url:'/chat/show',
+		type:'GET',
+		data:{method: 'fetch'},
+		success: function(data){
+			$('.chat .tampil').html(data);
+		}
+	});
+}
+chat.fetchPesan1();
 
 $('form').submit(function() {  
     var valuesToSubmit = $(this).serialize();
@@ -52,6 +66,7 @@ chat.pesan.bind('keydown', function(e){
 	console.log(1);
 	
 });
+
 $(document).ready(function(e){
 	$('#pesan').keydown(function(e){
     	if(e.keyCode==13){
@@ -69,6 +84,7 @@ $('#formpesan').submit(function() {
 				console.log(data);
 				chat.fetchPesan();
 				$('#pesan').val('');
+
 			}
 		})
 		return false;

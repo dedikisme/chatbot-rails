@@ -1,14 +1,14 @@
 <% javascript 'chat_show.js' %>
 <table class="table table-striped">
     <tbody>
-    	<%= @cookies %>
+    	<%= @cookies %> 
 <% for i in 1..@chat.pesan.count %>
  <tr>
     <td>
 <% if (i%2==0)  %>
-	<%= 'CS : ' %>
+	<img src="/img/user.png" style="float:left;"><%= 'CS : ' %>
 <% else %>
-	<%= 'You : ' %>
+	<img src="/img/usergroup.png" style="float:left;"><%= 'You : ' %>
 <% end %>
 <%= @chat.pesan["#{i}"]  %>
 	</td>
@@ -16,4 +16,9 @@
 <% end %>
  </tbody>
 </table>
+<% if @scroll=='down' %>
+<script>
+window.location = "#down";
+</script>
+<% end %>
 <div id="down"></div>

@@ -1,18 +1,36 @@
 <% javascript 'chat_index.js' %>
+<div class="row" id="home">
+<img src="/img/head.jpg">
+</div>
+ <div class="container">
+<div id="tentang">
+<h1>Apa sih Socmed?</h1>
+<p> <img src="/img/social-media.jpg" class="img-rounded" style="float:left; margin-right:20px"> <b>Media sosial</b> atau yang biasa disebut socmed adalah sebuah media online, dengan para penggunanya bisa dengan mudah berpartisipasi, berbagi, dan menciptakan isi meliputi blog, jejaring sosial, wiki, forum dan dunia virtual. Blog, jejaring sosial dan wiki merupakan bentuk media sosial yang paling umum digunakan oleh masyarakat di seluruh dunia.
+Andreas Kaplan dan Michael Haenlein mendefinisikan media sosial sebagai "sebuah kelompok aplikasi berbasis internet yang membangun di atas dasar ideologi dan teknologi Web 2.0 , dan yang memungkinkan penciptaan dan pertukaran user-generated content".
+</p>
+<p>
+	Pesatnya perkembangan media sosial kini dikarenakan semua orang seperti bisa memiliki media sendiri. Jika untuk memiliki media tradisional seperti televisi, radio, atau koran dibutuhkan modal yang besar dan tenaga kerja yang banyak, maka lain halnya dengan media. Seorang pengguna media sosial bisa mengakses menggunakan media sosial dengan jaringan internet bahkan yang aksesnya lambat sekalipun, tanpa biaya besar, tanpa alat mahal dan dilakukan sendiri tanpa karyawan. Pengguna media sosial dengan bebas bisa mengedit, menambahkan, memodifikasi baik tulisan, gambar, video, grafis, dan berbagai model content lainnya.
+	</p>
+	<p>
 
-
-<h1>Chat#index</h1>
+Menurut Antony Mayfield dari iCrossing, media sosial adalah mengenai menjadi manusia biasa. Manusia biasa yang saling membagi ide, bekerjasama, dan berkolaborasi untuk menciptakan kreasi, berfikir, berdebat, menemukan orang yang bisa menjadi teman baik, menemukan pasangan, dan membangun sebuah komunitas. Intinya, menggunakan media sosial menjadikan kita sebagai diri sendiri. Selain kecepatan informasi yang bisa diakses dalam hitungan detik, menjadi diri sendiri dalam media sosial adalah alasan mengapa media sosial berkembang pesat. Tak terkecuali, keinginan untuk aktualisasi diri dan kebutuhan menciptakan personal branding.</p>
+<br><br>
+</div>
+<div  id="chat">
+<h1>Chat tentang Socmed</h1>
 <%= @data %>
-
-
 <div class="chat">
 
 	<div class="tampil">
 			
 	</div>
-<%= form_tag("create",:method => "post", :id => "formpesan" )  %>
+<%= form_tag("/chat/create",:method => "post", :id => "formpesan" )  %>
 	<input type='text' name="pesan" class="pesan" placeholder="Silahkan tulis pertanyaan anda" id="pesan">
 	<input type='submit' class="btn btn-primary" value='Kirim'>
 </form>
-<%= request.remote_ip %>
+</div>
+<footer>
+fork on <a href="http://github.com/dedikisme/chatbot-rails">github</a>
+</footer>
+</div>
 </div>
