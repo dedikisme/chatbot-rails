@@ -46,7 +46,7 @@ def jawab(tanya,topik)
       hasil= cekdata(topik.almamater,"#{topik.topik} lulusan dari")
     when 'kerja'
       hasil=cekdata(topik.pekerjaan,"Pekerjaan #{topik.topik} adalah ")
-   when 'perusahaan'
+    when 'perusahaan'
       hasil=cekdata(topik.perusahaan,"Perusahaan dari #{topik.topik} adalah ")
 
     when 'siapa'
@@ -75,7 +75,7 @@ def jawab(tanya,topik)
         data[i]=c[i].topik
       end
       hasil="aplikasi yang support dengan  #{tanya['param'][0]} antara lain " + data.join(', ')
- when 'macamsocmed'
+    when 'macamsocmed'
       c = Datum.where(type: "socmed")
       data=Array.new
       for i in 0..c.count-1
@@ -143,7 +143,7 @@ def cekkatatanya(data)
   tanya["bagaimana"] = %w(gimana bagaimana gmn)
   tanya["siapa"]= %w(sapa siapa diri buat cipta)
   tanya["alamat"]= %w(alamat almt situs url domain)
-    tanya["macam"]=%w(saja macam jenis)
+  tanya["macam"]=%w(saja macam jenis)
 
   tanya["fitur"]=%w(fitur fasilitas)
   tanya["platform"]=%w(support platform device)
@@ -211,27 +211,33 @@ def cekkatatanya(data)
   return  hasil;
 end
 def stemming(kalimat)
-   data=Array.new
-  katakata=Kata.first
-  ardata=kalimat.split(" ")
-  for i in 0..ardata.count-1
-    datatemp=ardata[i].stem
-         data[i]=datatemp
-    for y in 0..katakata.data.count-1
-      if katakata.data[y] == datatemp
-                 data[i]=datatemp
+ data=Array.new
+ katakata=Kata.first
+ ardata=kalimat.split(" ")
+ for i in 0..ardata.count-1
+  datatemp=ardata[i].stem
+  data[i]=datatemp
+  for y in 0..katakata.data.count-1
+    if katakata.data[y] == datatemp
+     data[i]=datatemp
 
-            break
-end
-     if Levenshtein.distance(katakata.data[y], datatemp) ==1
-                    data[i]=  katakata.data[y]
-    end
+     break
+   end
+   if Levenshtein.distance(katakata.data[y], datatemp) ==1
+    data[i]=  katakata.data[y]
+  else 
+    if Levenshtein.distance(katakata.data[y], datatemp) ==2
+    data[i]=  katakata.data[y]
+
+
   end
 end
+end
+end
 puts data
-  return data
+return data
 end
 def hapusawalan
-  
+
 end
 end
